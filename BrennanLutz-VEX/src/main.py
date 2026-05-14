@@ -177,11 +177,17 @@ def main():
     """
     The main() function is the program that is executed by the Brain
     """
+bump()    
+leftMotor.set_stopping(BRAKE)
+rightMotor.set_stopping(BRAKE)
 
-    bump()                  # Call the bump() function to begin program execution 
+                 # Call the bump() function to begin program execution 
     inertialCalibration()   # Calibarte the inertial sensor
 
     driveStraight(90, 0, 50) # Call driveStraight with neccessary parameters
+    wait(4, SECONDS)
+    driveStraight(90, 0, 50)
+
 
 # --------------- Call Main ------------------------------------------------------------------
 main()
