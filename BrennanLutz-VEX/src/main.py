@@ -108,7 +108,7 @@ def driveStraight(distance, setpoint, motorVelocity):
 
     inertial_1.reset_rotation() # Reset the rotation value before taking action
 
-    kP = 0.00   # Proportional constant for driving straight
+    kP = 0.7   # Proportional constant for driving straight
                 # Used calculate the correction to maintain course
                 # If too small, correction will occur too slowly
                 # If too large, over-corretcion will occur
@@ -186,7 +186,7 @@ rightMotor.set_stopping(BRAKE)
 
     driveStraight(90, 0, 50) # Call driveStraight with neccessary parameters
     wait(4, SECONDS)
-    driveStraight(90, 0, 50)
+    driveStraight(-90, 0, 50)
 
 
 # --------------- Call Main ------------------------------------------------------------------
