@@ -114,7 +114,7 @@ def driveStraight(distance, setpoint, motorVelocity):
     leftMotor.set_stopping(COAST)
     rightMotor.set_stopping(COAST)
 
-    kP = 0.31       # Proportional constant for driving straight
+    kP = 0.33       # Proportional constant for driving straight
                     # used to calculate the correctionto maintain course
                     # If too small, correction will occur too slowly
                     # If too large, overcorrection will occur
@@ -219,7 +219,7 @@ def pointTurn(setPoint):
             clockwise = True    # Turn CW
     # Define kP and kD for CW and CCW turns
     if (clockwise): # Values for CW turn
-        kP = 0.04
+        kP = 0.045
         kD = 0.00
     else:           # Values for CCW turn
         kP = 0.04
@@ -273,15 +273,15 @@ def main():
     bump()  # call bump() to execute the program
     intertialCalibration()  # Calibrate the inertial sensor
 
-    driveStraight(83.7, 0, 50) # Call driveStaight() with distance, setpoint, and motor velocity parameters
-    wait(4, SECONDS) # Wait 4 seconds before executing the next command
-    driveStraight(83.7, 0, -50) # Call driveStaight() with distance, setpoint, and motor velocity parameters to drive in reverse
+    #driveStraight(84.2, 0, 50) # Call driveStaight() with distance, setpoint, and motor velocity parameters
+   # wait(4, SECONDS) # Wait 4 seconds before executing the next command
+    #driveStraight(84.2, 0, -50) # Call driveStaight() with distance, setpoint, and motor velocity parameters to drive in reverse
 
-    #pointTurn(224)
-    #wait(2, SECONDS)
-    #pointTurn(37)
-    #wait(2, SECONDS)
-   # pointTurn(135)
-    #wait(2, SECONDS)
+    pointTurn(224)
+    wait(2, SECONDS)
+    pointTurn(37)
+    wait(2, SECONDS)
+    pointTurn(135)
+    wait(2, SECONDS)
 # -------------------------------------------- Call main Function --------------------------------------------
 main()
