@@ -212,7 +212,7 @@ def pointTurn(setPoint):
             clockwise = True # Turn CW
         else:
             clockwise = False   # Turn CCW
-
+    else:
         if (abs(difference) <= 180):
             clockwise = False   # Turn CCW
         else:
@@ -222,8 +222,8 @@ def pointTurn(setPoint):
         kP = 0.045
         kD = 0.00
     else:           # Values for CCW turn
-        kP = 0.04
-        kD = 0.00
+        kP = 0.1
+        kD = 0.04
 
     # Define maximum turning velocity and previous error term
     maxVelocity = 50    # Maximum turnign velocity
