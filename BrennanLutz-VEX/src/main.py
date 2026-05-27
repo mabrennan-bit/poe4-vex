@@ -17,6 +17,7 @@ brain = Brain()
 # -------------------------------------------- Robot Configuration --------------------------------------------
 rightMotor = Motor(Ports.PORT7, GearSetting.RATIO_18_1, False)  # Right drivetrain motor
 leftMotor = Motor(Ports.PORT2, GearSetting.RATIO_18_1, True)    # Left drivetrain motor
+drivetrain = DriveTrain(leftMotor, rightMotor)                  # Run both motors simultaneously
 liftMotor = Motor(Ports.PORT3, GearSetting.RATIO_18_1, False)   # Lifearm motor
 inertial_1 = Inertial(Ports.PORT5)                              # Inertial sensor
 bumpSwitch = Bumper(brain.three_wire_port.a)                    # Bumper switch
@@ -97,8 +98,7 @@ def driveStraightData(e):
     brain.screen.print("Error: " + str(e)) # Return the current error
 
 def stopMotors():
-    rightMotor.stop()
-    leftMotor.stop()
+    drivetrain.stop()
     wait(0.5, SECONDS) # Wait 0.5 seconds for the system to stabilize
     
 def driveStraight(distance, setpoint, motorVelocity):
@@ -147,8 +147,7 @@ def driveStraight(distance, setpoint, motorVelocity):
             rightMotor.set_velocity(motorVelocity - correction, PERCENT)
             
             # Spin motors
-            leftMotor.spin(FORWARD)
-            rightMotor.spin(FORWARD)
+            drivetrain.drive(FORWARD)
             
             driveStraightData(error) # Display position, rotation, and error
     
@@ -172,8 +171,8 @@ def driveStraight(distance, setpoint, motorVelocity):
             rightMotor.set_velocity(motorVelocity - correction, PERCENT)
             
             # Spin motors
-            leftMotor.spin(FORWARD)
-            rightMotor.spin(FORWARD)
+            drivetrain.drive(FORWARD)
+
             
             driveStraightData(error) # Display position, rotation, and error
     
@@ -264,7 +263,18 @@ def pointTurn(setPoint):
 
         previousError = turnError       # Update prevoous error term
         wait(20, MSEC)
+def liftArm(motorVelocity, liftAngle):
+    #configure the motor to hold its poisition
+    liftMotor.set_stopping(HOLD)
 
+    liftMotor.set_velocity(motorVelocity, PERCENT)
+
+    gearRatio = 5   #60T to 12T
+    motorAngularDisplacement = liftAngle * gearRatio    #Calculate the motor axle's angular displacement 
+
+    #Spin motor forward for the given angular displacment
+    liftMotor.spin_for(FORWARD, motorAngularDisplacement, DEGREES)
+    wait(0.5, SECONDS)
 # -------------------------------------------- Main Function --------------------------------------------
 def main():
     """
@@ -274,14 +284,20 @@ def main():
     intertialCalibration()  # Calibrate the inertial sensor
 
     #driveStraight(84.2, 0, 50) # Call driveStaight() with distance, setpoint, and motor velocity parameters
-   # wait(4, SECONDS) # Wait 4 seconds before executing the next command
+    #wait(4, SECONDS) # Wait 4 seconds before executing the next command
     #driveStraight(84.2, 0, -50) # Call driveStaight() with distance, setpoint, and motor velocity parameters to drive in reverse
 
-    pointTurn(224)
-    wait(2, SECONDS)
-    pointTurn(37)
-    wait(2, SECONDS)
-    pointTurn(135)
-    wait(2, SECONDS)
+    #pointTurn(224)
+    #wait(2, SECONDS)
+    #pointTurn(37)
+    #wait(2, SECONDS)
+    #pointTurn(135)
+    #wait(2, SECONDS)
+
+    driveStraight(93, 0, 50)
+    liftArm(20, 40)
+    #driveStraight(94, 0, -50)
+
+
 # -------------------------------------------- Call main Function --------------------------------------------
 main()
