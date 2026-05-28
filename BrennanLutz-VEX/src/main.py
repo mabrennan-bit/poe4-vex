@@ -114,7 +114,7 @@ def driveStraight(distance, setpoint, motorVelocity):
     leftMotor.set_stopping(COAST)
     rightMotor.set_stopping(COAST)
 
-    kP = 0.33       # Proportional constant for driving straight
+    kP = 0.323       # Proportional constant for driving straight
                     # used to calculate the correctionto maintain course
                     # If too small, correction will occur too slowly
                     # If too large, overcorrection will occur
@@ -294,9 +294,12 @@ def main():
     #pointTurn(135)
     #wait(2, SECONDS)
 
-    driveStraight(93, 0, 50)
+    driveStraight(94, 0, 50)
     liftArm(20, 40)
-    #driveStraight(94, 0, -50)
+    driveStraight(35, 0, -30)
+    pointTurn(90)
+    driveStraight(2, 0, 30)
+    liftArm(20, -30)
 
 
 # -------------------------------------------- Call main Function --------------------------------------------
